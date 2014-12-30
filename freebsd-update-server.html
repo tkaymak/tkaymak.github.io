@@ -67,8 +67,11 @@ version you are trying to distribute. Thus I first upgraded the update server
 machine to 9.3 via the <code>freebsd-update -r 9.3-RELEASE upgrade</code> command as 
 described in point 24.2.3 in the <a href="https://www.freebsd.org/doc/en/books/handbook/updating-upgrading-freebsdupdate.html">handbook</a>. </p>
 <p>When running on the newest version, proceed with checking out the SVN repository 
-that holds all the configuration and scripts for the update server via:
-<code>cd /usr/local/ &amp;&amp; sudo svn co http://svn.freebsd.org/base/user/cperciva/freebsd-update-build freebsd-update-server</code></p>
+that holds all the configuration and scripts for the update server via:</p>
+<div class="highlight"><pre>```cd /usr/local/ &amp;&amp; sudo svn co http://svn.freebsd.org/base/user/cperciva/freebsd-update-build freebsd-update-server```
+</pre></div>
+
+
 <p>I suggest to use <code>/usr/local</code> as this is the 'standard' path of most scripts 
 within the repository.</p>
 <h3>Building a version</h3>
