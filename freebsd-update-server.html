@@ -76,8 +76,8 @@ svn co http://svn.freebsd.org/base/user/cperciva/freebsd-update-build freebsd-up
 <p>I suggest to use <code>/usr/local</code> as this is the 'standard' path of most scripts 
 within the repository.</p>
 <h3>Building a version</h3>
-<p>As time of this writing there exists no default configs in the <code>/usr/local/freebsd-update-server/scripts</code> 
-folder. Thats why we copy over the configuration from 9.2 first:</p>
+<p>As time of this writing there exists no default config in the <code>/usr/local/freebsd-update-server/scripts</code> 
+folder. That is why we copy over the configuration from 9.2 first:</p>
 <div class="highlight"><pre>cp -r /usr/local/freebsd-update-server/scripts/9.2-RELEASE /usr/local/freebsd-update-server/scripts/9.3-RELEASE
 </pre></div>
 
@@ -111,6 +111,26 @@ export EOL=1483142400
 generated via the first run of the make script:</p>
 <div class="highlight"><pre>cd /usr/local/freebsd-update-server    
 sh scripts/make.sh
+</pre></div>
+
+
+<p>Note that password down somewhere safe, you will need it to sign all updates in 
+the future. Next step is to run our initial build. This can take some time thus
+I recommend starting a tmux (or screen if you like) session first:</p>
+<div class="highlight"><pre>tmux new -s upgrade_server
+cd /usr/local/freebsd-update-server
+</pre></div>
+
+
+<p>We will need to adjust the <code>scripts/build.conf</code> so that the script can fetch the
+correct ISO image for our version 9.3, adjust the following line like this:</p>
+<div class="highlight"><pre># Location from which to fetch releases
+export FTP=ftp://ftp.freebsd.org/pub/FreeBSD/releases/ISO-IMAGES/9.3/
+</pre></div>
+
+
+<p>After that we can start our first build:    </p>
+<div class="highlight"><pre>sh scripts/init.sh amd64 9.3-RELEASE
 </pre></div>
       </div>
 <!-- /.entry-content -->
