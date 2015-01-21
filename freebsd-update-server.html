@@ -132,6 +132,61 @@ export FTP=ftp://ftp.freebsd.org/pub/FreeBSD/releases/ISO-IMAGES/9.3/
 <p>After that we can start our first build:    </p>
 <div class="highlight"><pre>sh scripts/init.sh amd64 9.3-RELEASE
 </pre></div>
+
+
+<p>This process can take up to several hours, depending on the hardware it is run 
+on. It finishes with the following output:</p>
+<div class="highlight"><pre>FreeBSD/amd64 9.3-RELEASE initialization build complete.  Please
+review the list of build stamps printed above to confirm that
+they look sensible, then run
+# sh -e approve.sh amd64 9.3-RELEASE
+to sign the release.
+</pre></div>
+
+
+<p>First, we mount our signing key with the password that we encrypted it with, 
+then we sign our release:</p>
+<div class="highlight"><pre>sh -e scripts/mountkey.sh
+sh -e scripts/approve.sh amd64 9.3-RELEASE
+</pre></div>
+
+
+<p>This finishes with:</p>
+<div class="highlight"><pre>The FreeBSD/amd64 9.3-RELEASE update build has been signed and is
+ready to be uploaded.  Remember to run
+# sh -e umountkey.sh
+to unmount the decrypted key once you have finished signing all
+the new builds.
+</pre></div>
+
+
+<p>Next we continue with the 9.2 update files, which have to be built as well. This 
+is necessary since the system has to determine the difference between two 
+versions. For this we have to create the amd64 directory in the scripts folder 
+and copy over the build.conf from the i386 folder like we already did for the 
+9.3 files:</p>
+<div class="highlight"><pre>mkdir scripts/9.2-RELEASE/amd64
+cp scripts/9.2-RELEASE/i386/build.conf scripts/9.2-RELEASE/amd64/build.conf
+</pre></div>
+
+
+<p>Next we edit the <code>amd64/build.conf</code> file for 9.2 and adjust 
+the SHA256 hash in it :</p>
+<div class="highlight"><pre># SHA256 hash of disc1.iso image.
+export RELH=a8c1751b83646530148766618a89a97009e7500e7057a5cbe3afd74ef480c915
+</pre></div>
+
+
+<p>We will need to adjust the <code>scripts/build.conf</code> so that the script can fetch the
+correct ISO image for the version 9.2, adjust the following line like this:</p>
+<div class="highlight"><pre># Location from which to fetch releases
+export FTP=ftp://ftp.freebsd.org/pub/FreeBSD/releases/ISO-IMAGES/9.2/
+</pre></div>
+
+
+<p>And fire off our build of the 9.2-RELEASE:</p>
+<div class="highlight"><pre>sh scripts/init.sh amd64 9.2-RELEASE
+</pre></div>
       </div>
 <!-- /.entry-content -->
       <footer class="post-info text-muted">
