@@ -52,37 +52,37 @@
       </header>
 <!-- .entry-content -->
       <div class="entry-content">
-        <p><a href="https://www.freebsd.org/">FreeBSD</a> is an operating system that we use to various 
-things at work. It's most significant advantage lays in the adavanced filesystem 
+        <p><a href="https://www.freebsd.org/">FreeBSD</a> is an operating system that we use to various
+things at work. It's most significant advantage lays in the adavanced filesystem
 <a href="https://en.wikipedia.org/wiki/ZFS">ZFS</a> and it's proven stability. As of this
 writing we run 39 servers with FreeBSD and we update them regularly. While normal
 patches are quite fast to fetch and install, the upgrade from version 9.2 to 9.3
-took a significant amount of time to fetch all the necessary files from the 
+took a significant amount of time to fetch all the necessary files from the
 official servers.</p>
 <p>That is why we started to run our own internal FreeBSD update server. There exist
 some documentation for this inside the official <a href="https://www.freebsd.org/doc/en_US.ISO8859-1/articles/freebsd-update-server/article.html">handbook</a> which formed the basis for this blog post.</p>
 <h3>Prerequisites</h3>
-<p>Important to know is that the update server has to run a newer version than the 
-version you are trying to distribute. Thus I first upgraded the update server 
-machine to 9.3 via the <code>freebsd-update -r 9.3-RELEASE upgrade</code> command as 
-described in point 24.2.3 in the <a href="https://www.freebsd.org/doc/en/books/handbook/updating-upgrading-freebsdupdate.html">handbook</a>. </p>
-<p>When running on the newest version, proceed with checking out the SVN repository 
+<p>Important to know is that the update server has to run a newer version than the
+version you are trying to distribute. Thus I first upgraded the update server
+machine to 9.3 via the <code>freebsd-update -r 9.3-RELEASE upgrade</code> command as
+described in point 24.2.3 in the <a href="https://www.freebsd.org/doc/en/books/handbook/updating-upgrading-freebsdupdate.html">handbook</a>.</p>
+<p>When running on the newest version, proceed with checking out the SVN repository
 that holds all the configuration and scripts for the update server via:</p>
 <div class="highlight"><pre>cd /usr/local/
 svn co http://svn.freebsd.org/base/user/cperciva/freebsd-update-build freebsd-update-server
 </pre></div>
 
 
-<p>I suggest to use <code>/usr/local</code> as this is the 'standard' path of most scripts 
+<p>I suggest to use <code>/usr/local</code> as this is the 'standard' path of most scripts
 within the repository.</p>
 <h3>Building a version</h3>
-<p>As time of this writing there exists no default config in the <code>/usr/local/freebsd-update-server/scripts</code> 
+<p>As time of this writing there exists no default config in the <code>/usr/local/freebsd-update-server/scripts</code>
 folder. That is why we copy over the configuration from 9.2 first:</p>
 <div class="highlight"><pre>cp -r /usr/local/freebsd-update-server/scripts/9.2-RELEASE /usr/local/freebsd-update-server/scripts/9.3-RELEASE
 </pre></div>
 
 
-<p>Next, as we want to build and distribute an amd64 version, we create a folder 
+<p>Next, as we want to build and distribute an amd64 version, we create a folder
 for that, copy over the configuration from i386 and remove the i386 folder:</p>
 <div class="highlight"><pre>cd /usr/local/freebsd-update-server/scripts/9.3-RELEASE
 mkdir amd64
@@ -91,8 +91,8 @@ rm -rf i386
 </pre></div>
 
 
-<p>The last step is of course optional. I like to keep things tidy and thus removed 
-the i386 folder. Next we edit the <code>amd64/build.conf</code> file and adjust 
+<p>The last step is of course optional. I like to keep things tidy and thus removed
+the i386 folder. Next we edit the <code>amd64/build.conf</code> file and adjust
 the SHA256 hash and the EOL date in it to reflect version 9.3:</p>
 <div class="highlight"><pre># SHA256 hash of disc1.iso image.
 export RELH=5a3c82653d77bba7d7ded8bd7efbedc09d52cf4045d98ce52a82c9e0f8fa9b0e
@@ -109,12 +109,12 @@ export EOL=1483142400
 
 <p>FreeBSD upgrades are signed by the update server. This is done via a key that is
 generated via the first run of the make script:</p>
-<div class="highlight"><pre>cd /usr/local/freebsd-update-server    
+<div class="highlight"><pre>cd /usr/local/freebsd-update-server
 sh scripts/make.sh
 </pre></div>
 
 
-<p>Note that password down somewhere safe, you will need it to sign all updates in 
+<p>Note that password down somewhere safe, you will need it to sign all updates in
 the future. Next step is to run our initial build. This can take some time thus
 I recommend starting a tmux (or screen if you like) session first:</p>
 <div class="highlight"><pre>tmux new -s upgrade_server
@@ -129,12 +129,12 @@ export FTP=ftp://ftp.freebsd.org/pub/FreeBSD/releases/ISO-IMAGES/9.3/
 </pre></div>
 
 
-<p>After that we can start our first build:    </p>
+<p>After that we can start our first build:</p>
 <div class="highlight"><pre>sh scripts/init.sh amd64 9.3-RELEASE
 </pre></div>
 
 
-<p>This process can take up to several hours, depending on the hardware it is run 
+<p>This process can take up to several hours, depending on the hardware it is run
 on. It finishes with the following output:</p>
 <div class="highlight"><pre>FreeBSD/amd64 9.3-RELEASE initialization build complete.  Please
 review the list of build stamps printed above to confirm that
@@ -144,7 +144,7 @@ to sign the release.
 </pre></div>
 
 
-<p>First, we mount our signing key with the password that we encrypted it with, 
+<p>First, we mount our signing key with the password that we encrypted it with,
 then we sign our release:</p>
 <div class="highlight"><pre>sh -e scripts/mountkey.sh
 sh -e scripts/approve.sh amd64 9.3-RELEASE
@@ -160,17 +160,17 @@ the new builds.
 </pre></div>
 
 
-<p>Next we continue with the 9.2 update files, which have to be built as well. This 
-is necessary since the system has to determine the difference between two 
-versions. For this we have to create the amd64 directory in the scripts folder 
-and copy over the build.conf from the i386 folder like we already did for the 
+<p>Next we continue with the 9.2 update files, which have to be built as well. This
+is necessary since the system has to determine the difference between two
+versions. For this we have to create the amd64 directory in the scripts folder
+and copy over the build.conf from the i386 folder like we already did for the
 9.3 files:</p>
 <div class="highlight"><pre>mkdir scripts/9.2-RELEASE/amd64
 cp scripts/9.2-RELEASE/i386/build.conf scripts/9.2-RELEASE/amd64/build.conf
 </pre></div>
 
 
-<p>Next we edit the <code>amd64/build.conf</code> file for 9.2 and adjust 
+<p>Next we edit the <code>amd64/build.conf</code> file for 9.2 and adjust
 the SHA256 hash in it :</p>
 <div class="highlight"><pre># SHA256 hash of disc1.iso image.
 export RELH=a8c1751b83646530148766618a89a97009e7500e7057a5cbe3afd74ef480c915
@@ -187,6 +187,23 @@ export FTP=ftp://ftp.freebsd.org/pub/FreeBSD/releases/ISO-IMAGES/9.2/
 <p>And fire off our build of the 9.2-RELEASE:</p>
 <div class="highlight"><pre>sh scripts/init.sh amd64 9.2-RELEASE
 </pre></div>
+
+
+<p>This will complete with:</p>
+<div class="highlight"><pre>FreeBSD/amd64 9.2-RELEASE initialization build complete.  Please
+review the list of build stamps printed above to confirm that
+they look sensible, then run
+# sh -e approve.sh amd64 9.2-RELEASE
+</pre></div>
+
+
+<p>To mount the key and sign the release run:</p>
+<div class="highlight"><pre>sh -e scripts/approve.sh amd64 9.2-RELEASE
+</pre></div>
+
+
+<p>Then build the upgrade patches between 9.2 and 9.3 via:</p>
+<p>sh tools/build-upgrade-patches.sh pub/ amd64 9.3-RELEASE 9.2-RELEASE</p>
       </div>
 <!-- /.entry-content -->
       <footer class="post-info text-muted">
