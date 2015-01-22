@@ -204,6 +204,16 @@ they look sensible, then run
 
 <p>Then build the upgrade patches between 9.2 and 9.3 via:</p>
 <p>sh tools/build-upgrade-patches.sh pub/ amd64 9.3-RELEASE 9.2-RELEASE</p>
+<p>This command should finish without any output. We now have all necessary
+files to upgrade a 9.2 system to a 9.3 system. To distribute these we
+will use the webserver nginx.</p>
+<h3>Installing and configuring nginx</h3>
+<p>Installing nginx via the pkg package manager starts with:</p>
+<p>pkg install nginx</p>
+<p>To enable it add</p>
+<p>nginx_enable="YES" to</p>
+<p>to the <code>\etc\rc.conf</code> file.</p>
+<p>service nginx start</p>
       </div>
 <!-- /.entry-content -->
       <footer class="post-info text-muted">
