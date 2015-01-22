@@ -203,17 +203,48 @@ they look sensible, then run
 
 
 <p>Then build the upgrade patches between 9.2 and 9.3 via:</p>
-<p>sh tools/build-upgrade-patches.sh pub/ amd64 9.3-RELEASE 9.2-RELEASE</p>
+<div class="highlight"><pre>sh tools/build-upgrade-patches.sh pub/ amd64 9.3-RELEASE 9.2-RELEASE
+</pre></div>
+
+
 <p>This command should finish without any output. We now have all necessary
 files to upgrade a 9.2 system to a 9.3 system. To distribute these we
 will use the webserver nginx.</p>
 <h3>Installing and configuring nginx</h3>
 <p>Installing nginx via the pkg package manager starts with:</p>
-<p>pkg install nginx</p>
+<div class="highlight"><pre>pkg install nginx
+</pre></div>
+
+
 <p>To enable it add</p>
-<p>nginx_enable="YES" to</p>
-<p>to the <code>\etc\rc.conf</code> file.</p>
-<p>service nginx start</p>
+<div class="highlight"><pre>nginx_enable=&quot;YES&quot; to
+</pre></div>
+
+
+<p>to the <code>\etc\rc.conf</code> file. The standard configuration leaves the server
+open to the public, thus we will adjust the nginx configuration
+under <code>\usr\local\etc\nginx\nginx.conf</code>, to make the server only available
+within our internal network. In our case this is the following address:</p>
+<div class="highlight"><pre><span class="nt">server</span> <span class="p">{</span>
+     <span class="n">listen</span>       <span class="m">10</span><span class="o">.</span><span class="m">5</span><span class="o">.</span><span class="m">128</span><span class="o">.</span><span class="m">1</span><span class="o">:</span><span class="m">80</span><span class="p">;</span>
+</pre></div>
+
+
+<p>Also we change the root directory of nginx to point to the update files we
+just built:</p>
+<div class="highlight"><pre>root /usr/local/freebsd-update-server/pub
+</pre></div>
+
+
+<p>The last step is to start it via:</p>
+<div class="highlight"><pre>service nginx start
+</pre></div>
+
+
+<h3>Configuring the clients</h3>
+<p>We now have a working update server that is able to serve our clients, but
+they are not yet aware of the fast machine in their neighbourhood. To change
+this we have to change the <code>\etc\freebsd-update.conf</code>.</p>
       </div>
 <!-- /.entry-content -->
       <footer class="post-info text-muted">
