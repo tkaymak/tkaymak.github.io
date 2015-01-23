@@ -117,7 +117,7 @@ sh scripts/make.sh
 
 <p>Important! The command finishes with the output of the public key fingerprint. Note
 this down somewhere as well, you will need this fingerprint on every client so that
-it can verify the packages from the update server lateron:</p>
+it can verify the packages from the update server later on:</p>
 <div class="highlight"><pre>Public key fingerprint:
 5552a36eb246be88412c56eb6ee7edccab50ec9b2fe18c90767853e90ad52a0a
 </pre></div>
@@ -216,9 +216,21 @@ key in the meantime don't forget to mount it again via <code>sh -e scripts/mount
 </pre></div>
 
 
-<p>This command should finish without any output. We now have all necessary
-files to upgrade a 9.2 system to a 9.3 system. To distribute these we
-will use the webserver nginx.</p>
+<p>This command should finish without any output.</p>
+<h3>Building newest patches</h3>
+<p>After having build our initial version it is time to bring both to their newest level:</p>
+<div class="highlight"><pre>sh scripts/diff.sh amd64 9.2-RELEASE 17
+</pre></div>
+
+
+<p>This will conclude with</p>
+<p>Finally we can umount our signing key via:</p>
+<div class="highlight"><pre>sh scripts/umountkey.sh
+</pre></div>
+
+
+<p>We now have all necessary files to upgrade a 9.2 system to a 9.3 system. To
+distribute these we will use the webserver nginx.</p>
 <h3>Installing and configuring nginx</h3>
 <p>Installing nginx via the pkg package manager starts with:</p>
 <div class="highlight"><pre>pkg install nginx
@@ -253,7 +265,26 @@ just built:</p>
 <h3>Configuring the clients</h3>
 <p>We now have a working update server that is able to serve our clients, but
 they are not yet aware of the fast machine in their neighbourhood. To change
-this we have to change the <code>\etc\freebsd-update.conf</code>.</p>
+this we have to adjust the <code>\etc\freebsd-update.conf</code>:</p>
+<div class="highlight"><pre># Trusted keyprint.  Changing this is a Bad Idea unless you&#39;ve received
+# a PGP-signed email from &lt;security-officer@FreeBSD.org&gt; telling you to
+# change it and explaining why.
+# KeyPrint 800651ef4b4c71c27e60786d7b487188970f4b4169cc055784e21eb71d410cc5
+KeyPrint 5552a36eb246be88412c56eb6ee7edccab50ec9b2fe18c90767853e90ad52a0a
+
+# Server or server pool from which to fetch updates.  You can change
+# this to point at a specific server if you want, but in most cases
+# using a &quot;nearby&quot; server won&#39;t provide a measurable improvement in
+# performance.
+ServerName update.FreeBSD.org
+ServerName 10.5.128.1
+</pre></div>
+
+
+<p>As you can see we used the KeyPrint that the <code>make.sh</code> script generated for us.
+You can of course use the DNS name instead of the IP as the <code>ServerName</code>,
+but be sure to adjust the <code>/etc/hosts</code> file on each client so that it can resolve local
+names.</p>
       </div>
 <!-- /.entry-content -->
       <footer class="post-info text-muted">
