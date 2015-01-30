@@ -48,7 +48,7 @@
           Build your own FreeBSD Update server
         </h2>
         
-        <div class="text-muted">Fr 19 Dezember 2014</div>
+        <div class="text-muted">Fr 30 Januar 2015</div>
       </header>
 <!-- .entry-content -->
       <div class="entry-content">
@@ -211,12 +211,6 @@ key in the meantime don't forget to mount it again via <code>sh -e scripts/mount
 </pre></div>
 
 
-<p>The last step is to build the upgrade patches between 9.2 and 9.3 via:</p>
-<div class="highlight"><pre>sh tools/build-upgrade-patches.sh pub/ amd64 9.3-RELEASE 9.2-RELEASE
-</pre></div>
-
-
-<p>This command should finish without any output.</p>
 <h3>Building newest patches</h3>
 <p>After having build our initial version it is time to bring both to their newest level. 
 The <code>17</code> as a parameter is the desired patchlevel in the following command:</p>
@@ -239,7 +233,13 @@ sh scripts/diff.sh amd64 9.3-RELEASE 9
 </pre></div>
 
 
-<p>Finally we can umount our signing key via:</p>
+<p>The last step is to approve the 9.3 patches and build the upgrade patches between 9.2 and 9.3 via:</p>
+<div class="highlight"><pre>sh -e scripts/approve.sh amd64 9.2-RELEASE
+sh tools/build-upgrade-patches.sh pub/ amd64 9.3-RELEASE 9.2-RELEASE
+</pre></div>
+
+
+<p>This command should finish without any output. Finally we can umount our signing key via:</p>
 <div class="highlight"><pre>sh scripts/umountkey.sh
 </pre></div>
 
@@ -291,7 +291,7 @@ KeyPrint 5552a36eb246be88412c56eb6ee7edccab50ec9b2fe18c90767853e90ad52a0a
 # this to point at a specific server if you want, but in most cases
 # using a &quot;nearby&quot; server won&#39;t provide a measurable improvement in
 # performance.
-ServerName update.FreeBSD.org
+# ServerName update.FreeBSD.org
 ServerName 10.5.128.1
 </pre></div>
 
@@ -304,7 +304,7 @@ names.</p>
 <!-- /.entry-content -->
       <footer class="post-info text-muted">
         <button type="button" class="btn btn-default">          
-          <a href="/category/misc.html"><div class="fa fa-lg fa-folder-open"></div> misc</a>
+          <a href="/category/freebsd.html"><div class="fa fa-lg fa-folder-open"></div> FreeBSD</a>
         </button>
       </footer>
       <!-- /.post-info -->
