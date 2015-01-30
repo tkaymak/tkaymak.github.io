@@ -223,7 +223,21 @@ key in the meantime don't forget to mount it again via <code>sh -e scripts/mount
 </pre></div>
 
 
-<p>This will conclude with</p>
+<p>This will conclude with:</p>
+<div class="highlight"><pre>FreeBSD/amd64 9.2-RELEASE update build complete.  Please review
+the list of build stamps printed above and the list of updated
+files to confirm that they look sensible, then run
+# sh -e approve.sh amd64 9.2-RELEASE
+to sign the build.
+</pre></div>
+
+
+<p>Next step is to approve the build followed by starting the build of the newest upgrade patches for 9.3:</p>
+<div class="highlight"><pre>sh -e scripts/approve.sh amd64 9.2-RELEASE
+sh scripts/diff.sh amd64 9.3-RELEASE 9
+</pre></div>
+
+
 <p>Finally we can umount our signing key via:</p>
 <div class="highlight"><pre>sh scripts/umountkey.sh
 </pre></div>
