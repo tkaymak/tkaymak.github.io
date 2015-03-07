@@ -92,7 +92,7 @@ the SHA256 hash and the EOL date in it to reflect the amd64 version. Also we nee
 point it towards the FTP server where to fetch the ISO image of the release from.
 The final file should look somewhat like this:</p>
 <div class="highlight"><pre># SHA256 hash of disc1.iso image.
-export RELH=5a3c82653d77bba7d7ded8bd7efbedc09d52cf4045d98ce52a82c9e0f8fa9b0e
+export RELH=a8c1751b83646530148766618a89a97009e7500e7057a5cbe3afd74ef480c915
 
 # Components of the world, source, and kernels
 export WORLDPARTS=&quot;base doc games&quot;
@@ -100,10 +100,10 @@ export SOURCEPARTS=&quot;src&quot;
 export KERNELPARTS=&quot;kernel&quot;
 
 # EOL date
-export EOL=1483142400
+export EOL=1419944400
 
 # Location from which to fetch releases
-export FTP=ftp://ftp.freebsd.org/pub/FreeBSD/releases/ISO-IMAGES/9.3/
+export FTP=ftp://ftp.freebsd.org/pub/FreeBSD/releases/ISO-IMAGES/9.2/
 </pre></div>
 
 
