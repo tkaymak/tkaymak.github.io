@@ -229,17 +229,17 @@ to sign the build.
 
 
 <p>Next step is to approve the 9.2 build followed by starting the build of the newest 
-upgrade patches for 9.3. At the moment the patchlevel for this version is <code>9</code>, 
+upgrade patches for 9.3. At the moment (April 2015) the patchlevel for this version is <code>13</code>, 
 but you should check <a href="https://www.freebsd.org/security/advisories.html">here</a> 
 for any new security advisory that announces a new patchlevel. To use the newest 
 patchlevel currently checked in to the SVN look into the folder 
 <code>/usr/local/freebsd-update-server/patches/9.3-RELEASE</code>. 
 The first number of a patchfile tells you its patchlevel. In my case the highest number is 
-<code>9</code> and therefore this is the highest patchlevel currently available via the SVN. </p>
+<code>13</code> and therefore this is the highest patchlevel currently available via the SVN.</p>
 <p>Approving the patches for 9.2 and starting the 
 differential build is done via:</p>
 <div class="highlight"><pre>sh -e scripts/approve.sh amd64 9.2-RELEASE
-sh scripts/diff.sh amd64 9.3-RELEASE 9
+sh scripts/diff.sh amd64 9.3-RELEASE 13
 </pre></div>
 
 
