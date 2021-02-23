@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tobias Kaymak"s Blog</title><link href="https://tobtob.de/" rel="alternate"></link><link href="https://tobtob.de/feeds/all.atom.xml" rel="self"></link><id>https://tobtob.de/</id><updated>2021-02-02T00:00:00+01:00</updated><subtitle>Tobias Kaymak</subtitle><entry><title>8 Years of Event Streaming with Apache Kafka</title><link href="https://tobtob.de/apache-kafka.html" rel="alternate"></link><published>2021-02-02T00:00:00+01:00</published><updated>2021-02-02T00:00:00+01:00</updated><author><name>Tobias Kaymak</name></author><id>tag:tobtob.de,2021-02-02:/apache-kafka.html</id><content type="html">&lt;p&gt;A post for the Confluent blog about my personal history with Apache Kafka is availabe &lt;a href="https://www.confluent.io/blog/batch-to-streams-8-years-of-event-streaming-with-apache-kafka/"&gt;here&lt;/a&gt;.&lt;/p&gt;</content><category term="Apache Kafka"></category></entry><entry><title>Why we chose Bigtable to complement BigQuery</title><link href="https://tobtob.de/google-cloud-bigtable.html" rel="alternate"></link><published>2021-01-14T12:03:00+01:00</published><updated>2021-01-14T12:03:00+01:00</updated><author><name>Tobias Kaymak</name></author><id>tag:tobtob.de,2021-01-14:/google-cloud-bigtable.html</id><content type="html">&lt;p&gt;I've contributed a blog post for the GCP Blog about our use of Bigtable at Ricardo.
+You can read it &lt;a href="https://cloud.google.com/blog/products/databases/choosing-cloud-native-bigtable-to-save-data-warehouse-costs"&gt;here&lt;/a&gt;.&lt;/p&gt;</content><category term="Google Cloud"></category></entry><entry><title>Four Apache Technologies Combined for Fun and Profit</title><link href="https://tobtob.de/beam-summit-2020.html" rel="alternate"></link><published>2020-08-26T00:00:00+02:00</published><updated>2020-08-26T00:00:00+02:00</updated><author><name>Tobias Kaymak</name></author><id>tag:tobtob.de,2020-08-26:/beam-summit-2020.html</id><content type="html">&lt;p&gt;The recording of my talk at the Online Beam Summit 2020 is now available on YouTube:&lt;/p&gt;
+&lt;p&gt;&lt;lite-youtube videoid="PiwLC-YK_Zw" playlabel="Play: Beam Summit Europe 2020 Talk"&gt;&lt;/lite-youtube&gt;&lt;/p&gt;</content><category term="Apache Beam"></category></entry><entry><title>From database dumps to streaming - Ricardo.ch's Beam journey</title><link href="https://tobtob.de/beam-summit-2019.html" rel="alternate"></link><published>2019-06-18T00:00:00+02:00</published><updated>2019-06-18T00:00:00+02:00</updated><author><name>Tobias Kaymak</name></author><id>tag:tobtob.de,2019-06-18:/beam-summit-2019.html</id><content type="html">&lt;p&gt;My talk at the Beam Summit Europe 2019 is now available on YouTube:&lt;/p&gt;
+&lt;p&gt;&lt;lite-youtube videoid="EcvnFH5LDE4" playlabel="Play: Beam Summit Europe 2019 Talk"&gt;&lt;/lite-youtube&gt;&lt;/p&gt;</content><category term="Apache Beam"></category></entry><entry><title>Taking Data from Somewhere and Put It Somewhere Else</title><link href="https://tobtob.de/tamedia-tx-2018.html" rel="alternate"></link><published>2018-06-14T00:00:00+02:00</published><updated>2018-06-14T00:00:00+02:00</updated><author><name>Tobias Kaymak</name></author><id>tag:tobtob.de,2018-06-14:/tamedia-tx-2018.html</id><content type="html">&lt;p&gt;I gave a talk at the Tamedia TX conference about how we approached the modernization of the Data Intelligence architecture at Ricardo:&lt;/p&gt;
+&lt;p&gt;&lt;lite-youtube videoid="Z3YMTiS1zSA" playlabel="Play: Tamedia TX 2018 Talk"&gt;&lt;/lite-youtube&gt;&lt;/p&gt;</content><category term="Talks"></category></entry><entry><title>Build your own FreeBSD update server</title><link href="https://tobtob.de/freebsd-update-server.html" rel="alternate"></link><published>2015-01-30T16:01:00+01:00</published><updated>2015-04-20T11:25:00+02:00</updated><author><name>Tobias Kaymak</name></author><id>tag:tobtob.de,2015-01-30:/freebsd-update-server.html</id><summary type="html">&lt;p&gt;&lt;a href="https://www.freebsd.org/"&gt;FreeBSD&lt;/a&gt; is an operating system that we use to power various
+things at work. Its most significant advantage lays in the advanced filesystem
+&lt;a href="https://en.wikipedia.org/wiki/ZFS"&gt;ZFS&lt;/a&gt; and it's proven stability. As of this
+writing we run 39 servers with FreeBSD and we update them regularly. While normal
+patches are quite fast to …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://www.freebsd.org/"&gt;FreeBSD&lt;/a&gt; is an operating system that we use to power various
+things at work. Its most significant advantage lays in the advanced filesystem
+&lt;a href="https://en.wikipedia.org/wiki/ZFS"&gt;ZFS&lt;/a&gt; and it's proven stability. As of this
+writing we run 39 servers with FreeBSD and we update them regularly. While normal
+patches are quite fast to fetch and install, the upgrade from version 9.2 to 9.3
+took a significant amount of time to fetch all the necessary files from the
+official servers.&lt;/p&gt;
+&lt;p&gt;That is why we started to run our own internal FreeBSD update server. There exists
+some documentation for this inside the official &lt;a href="https://www.freebsd.org/doc/en_US.ISO8859-1/articles/freebsd-update-server/article.html"&gt;handbook&lt;/a&gt; which formed the basis for this blog post.&lt;/p&gt;
+&lt;h3&gt;Prerequisites&lt;/h3&gt;
+&lt;p&gt;Important to know is that the update server has to run a newer version than the
+version you are trying to distribute. Thus I first upgraded the update server
+machine to 9.3 via the &lt;code&gt;freebsd-update -r 9.3-RELEASE upgrade&lt;/code&gt; command as
+described in point 24.2.3 in the &lt;a href="https://www.freebsd.org/doc/en/books/handbook/updating-upgrading-freebsdupdate.html"&gt;handbook&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;When running on the newest version, proceed with checking out the SVN repository
+that holds all the configuration and scripts for the update server via:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;cd /usr/local/&lt;/span&gt;
+&lt;span class="err"&gt;svn co http://svn.freebsd.org/base/user/cperciva/freebsd-update-build freebsd-update-server&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I suggest to use &lt;code&gt;/usr/local&lt;/code&gt; as this is the 'standard' path of most scripts
+within the repository.&lt;/p&gt;
+&lt;h3&gt;Building update packages&lt;/h3&gt;
+&lt;p&gt;For upgrading a system from 9.2 to 9.3 we need both versions available via our
+update server. This is necessary since the system has to determine the difference
+between two versions. For this we have to create the amd64 directory in the &lt;code&gt;scripts&lt;/code&gt;
+folder and copy over the build.conf from the i386 folder:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;cd /usr/local/freebsd-update-server/scripts/9.2-RELEASE&lt;/span&gt;
+&lt;span class="err"&gt;mkdir amd64&lt;/span&gt;
+&lt;span class="err"&gt;cp i386/build.conf amd64/build.conf&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Next we edit the &lt;code&gt;amd64/build.conf&lt;/code&gt; file and adjust
+the SHA256 hash and the EOL date in it to reflect the amd64 version. Also we need to
+point it towards the FTP server where to fetch the ISO image of the release from.
+The final file should look somewhat like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="n"&gt;SHA256&lt;/span&gt; &lt;span class="n"&gt;hash&lt;/span&gt; &lt;span class="k"&gt;of&lt;/span&gt; &lt;span class="n"&gt;disc1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iso&lt;/span&gt; &lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;RELH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;a8c1751b83646530148766618a89a97009e7500e7057a5cbe3afd74ef480c915&lt;/span&gt;
+
+&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="n"&gt;Components&lt;/span&gt; &lt;span class="k"&gt;of&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;world&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;source&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;and&lt;/span&gt; &lt;span class="n"&gt;kernels&lt;/span&gt;
+&lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;WORLDPARTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;base doc games&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;SOURCEPARTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;src&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;KERNELPARTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;kernel&amp;quot;&lt;/span&gt;
+
+&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="n"&gt;EOL&lt;/span&gt; &lt;span class="nb"&gt;date&lt;/span&gt;
+&lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;EOL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1419944400&lt;/span&gt;
+
+&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="k"&gt;Location&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;which&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="k"&gt;fetch&lt;/span&gt; &lt;span class="n"&gt;releases&lt;/span&gt;
+&lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;FTP&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;ftp&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;ftp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;freebsd&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pub&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;FreeBSD&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;releases&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ISO&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;IMAGES&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;FreeBSD upgrades are signed by the update server. This is done via a key that is
+generated via the first run of the make script, it will ask you for a password to
+protect your key. Note that password down somewhere safe, you will need it to sign
+all updates in the future:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;cd /usr/local/freebsd-update-server&lt;/span&gt;
+&lt;span class="err"&gt;sh scripts/make.sh&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Important! The command finishes with the output of the public key fingerprint. Note
+this down somewhere as well, you will need this fingerprint on every client so that
+it can verify the packages from the update server later on:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;Public key fingerprint:&lt;/span&gt;
+&lt;span class="err"&gt;5552a36eb246be88412c56eb6ee7edccab50ec9b2fe18c90767853e90ad52a0a&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The next step is to run our initial build. This can take some time thus
+I recommend starting a tmux (or screen if you like) session first:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;tmux new -s upgrade_server&lt;/span&gt;
+&lt;span class="err"&gt;cd /usr/local/freebsd-update-server&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;After that we can start our first build:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;sh scripts/init.sh amd64 9.2-RELEASE&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This process can take up to several hours, depending on the hardware it is run
+on. It finishes with the following output:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;FreeBSD/amd64 9.2-RELEASE initialization build complete.  Please&lt;/span&gt;
+&lt;span class="err"&gt;review the list of build stamps printed above to confirm that&lt;/span&gt;
+&lt;span class="err"&gt;they look sensible, then run&lt;/span&gt;
+&lt;span class="err"&gt;# sh -e approve.sh amd64 9.2-RELEASE&lt;/span&gt;
+&lt;span class="err"&gt;to sign the release.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;First, we mount our signing key with the password that we encrypted it with,
+then we sign our release:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;sh -e scripts/mountkey.sh&lt;/span&gt;
+&lt;span class="err"&gt;sh -e scripts/approve.sh amd64 9.2-RELEASE&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This finishes with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;The FreeBSD/amd64 9.2-RELEASE update build has been signed and is&lt;/span&gt;
+&lt;span class="err"&gt;ready to be uploaded.  Remember to run&lt;/span&gt;
+&lt;span class="err"&gt;# sh -e umountkey.sh&lt;/span&gt;
+&lt;span class="err"&gt;to unmount the decrypted key once you have finished signing all&lt;/span&gt;
+&lt;span class="err"&gt;the new builds.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Were done! No - actually we now have to build our &lt;code&gt;9.3-RELEASE&lt;/code&gt; upgrade files.
+We will copy over the configuration folder from 9.2 and adjust it to our needs:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;cp -r /usr/local/freebsd-update-server/scripts/9.2-RELEASE /usr/local/freebsd-update-server/scripts/9.3-RELEASE&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Next, as we want to build and distribute only an amd64 version, we delete the
+i386 folder:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;cd /usr/local/freebsd-update-server/scripts/9.3-RELEASE&lt;/span&gt;
+&lt;span class="err"&gt;rm -rf i386&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Let's adjust the &lt;code&gt;amd64/build.conf&lt;/code&gt; file for 9.3:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="n"&gt;SHA256&lt;/span&gt; &lt;span class="n"&gt;hash&lt;/span&gt; &lt;span class="k"&gt;of&lt;/span&gt; &lt;span class="n"&gt;disc1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iso&lt;/span&gt; &lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;RELH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="n"&gt;a3c82653d77bba7d7ded8bd7efbedc09d52cf4045d98ce52a82c9e0f8fa9b0e&lt;/span&gt;
+
+&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="n"&gt;Components&lt;/span&gt; &lt;span class="k"&gt;of&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;world&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;source&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;and&lt;/span&gt; &lt;span class="n"&gt;kernels&lt;/span&gt;
+&lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;WORLDPARTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;base doc games&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;SOURCEPARTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;src&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;KERNELPARTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;kernel&amp;quot;&lt;/span&gt;
+
+&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="n"&gt;EOL&lt;/span&gt; &lt;span class="nb"&gt;date&lt;/span&gt;
+&lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;EOL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1483142400&lt;/span&gt;
+
+&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="k"&gt;Location&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;which&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="k"&gt;fetch&lt;/span&gt; &lt;span class="n"&gt;releases&lt;/span&gt;
+&lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;FTP&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;ftp&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;ftp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;freebsd&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pub&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;FreeBSD&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;releases&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ISO&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;IMAGES&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And fire off our build of the 9.3-RELEASE:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;cd /usr/local/freebsd-update-server&lt;/span&gt;
+&lt;span class="err"&gt;sh scripts/init.sh amd64 9.3-RELEASE&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This will complete with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;FreeBSD/amd64 9.3-RELEASE initialization build complete.  Please&lt;/span&gt;
+&lt;span class="err"&gt;review the list of build stamps printed above to confirm that&lt;/span&gt;
+&lt;span class="err"&gt;they look sensible, then run&lt;/span&gt;
+&lt;span class="err"&gt;# sh -e approve.sh amd64 9.3-RELEASE&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To sign the release run the approve script again (if you unmounted the
+key in the meantime don't forget to mount it again via &lt;code&gt;sh -e scripts/mountkey.sh&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;sh -e scripts/approve.sh amd64 9.3-RELEASE&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Building newest patches&lt;/h3&gt;
+&lt;p&gt;After having build our initial version it is time to bring both to their newest level. 
+The &lt;code&gt;17&lt;/code&gt; as a parameter is the desired patchlevel in the following command:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;sh scripts/diff.sh amd64 9.2-RELEASE 17&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This will conclude with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;FreeBSD/amd64 9.2-RELEASE update build complete.  Please review&lt;/span&gt;
+&lt;span class="err"&gt;the list of build stamps printed above and the list of updated&lt;/span&gt;
+&lt;span class="err"&gt;files to confirm that they look sensible, then run&lt;/span&gt;
+&lt;span class="err"&gt;# sh -e approve.sh amd64 9.2-RELEASE&lt;/span&gt;
+&lt;span class="err"&gt;to sign the build.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Next step is to approve the 9.2 build followed by starting the build of the newest 
+upgrade patches for 9.3. At the moment (April 2015) the patchlevel for this version is &lt;code&gt;13&lt;/code&gt;, 
+but you should check &lt;a href="https://www.freebsd.org/security/advisories.html"&gt;here&lt;/a&gt; 
+for any new security advisory that announces a new patchlevel. To use the newest 
+patchlevel currently checked in to the SVN look into the folder 
+&lt;code&gt;/usr/local/freebsd-update-server/patches/9.3-RELEASE&lt;/code&gt;. 
+The first number of a patchfile tells you its patchlevel. In my case the highest number is 
+&lt;code&gt;13&lt;/code&gt; and therefore this is the highest patchlevel currently available via the SVN.&lt;/p&gt;
+&lt;p&gt;Approving the patches for 9.2 and starting the 
+differential build is done via:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;sh -e scripts/approve.sh amd64 9.2-RELEASE&lt;/span&gt;
+&lt;span class="err"&gt;sh scripts/diff.sh amd64 9.3-RELEASE 13&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The last step is to approve the 9.3 patches and build the upgrade patches between 9.2 and 9.3 via:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;sh -e scripts/approve.sh amd64 9.3-RELEASE&lt;/span&gt;
+&lt;span class="err"&gt;sh tools/build-upgrade-patches.sh pub amd64 9.3-RELEASE 9.2-RELEASE&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This command should finish without any output. Finally we can umount our signing key via:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;sh scripts/umountkey.sh&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We now have all necessary files to upgrade a 9.2 system to a 9.3 system. To
+distribute these we will use the webserver nginx.&lt;/p&gt;
+&lt;h3&gt;Installing and configuring nginx&lt;/h3&gt;
+&lt;p&gt;Installing nginx via the pkg package manager starts with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;pkg install nginx&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To enable it add&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;nginx_enable=&amp;quot;YES&amp;quot; to&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;to the &lt;code&gt;\etc\rc.conf&lt;/code&gt; file. The standard configuration leaves the server
+open to the public, thus we will adjust the nginx configuration
+under &lt;code&gt;\usr\local\etc\nginx\nginx.conf&lt;/code&gt;, to make the server only available
+within our internal network. In our case this is the following address:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;server {&lt;/span&gt;
+&lt;span class="err"&gt;     listen       10.5.128.1:80;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Also we change the root directory of nginx to point to the update files we
+just built:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;root /usr/local/freebsd-update-server/pub&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The last step is to start it via:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;service nginx start&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Configuring the clients&lt;/h3&gt;
+&lt;p&gt;We now have a working update server that is able to serve our clients, but
+they are not yet aware of the fast machine in their neighbourhood. To change
+this we have to adjust the &lt;code&gt;\etc\freebsd-update.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Trusted&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;keyprint&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;Changing&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;is&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Bad&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Idea&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;unless&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ve received&lt;/span&gt;
+&lt;span class="s1"&gt;# a PGP-signed email from &amp;lt;security-officer@FreeBSD.org&amp;gt; telling you to&lt;/span&gt;
+&lt;span class="s1"&gt;# change it and explaining why.&lt;/span&gt;
+&lt;span class="s1"&gt;# KeyPrint 800651ef4b4c71c27e60786d7b487188970f4b4169cc055784e21eb71d410cc5&lt;/span&gt;
+&lt;span class="s1"&gt;KeyPrint 5552a36eb246be88412c56eb6ee7edccab50ec9b2fe18c90767853e90ad52a0a&lt;/span&gt;
+
+&lt;span class="s1"&gt;# Server or server pool from which to fetch updates.  You can change&lt;/span&gt;
+&lt;span class="s1"&gt;# this to point at a specific server if you want, but in most cases&lt;/span&gt;
+&lt;span class="s1"&gt;# using a &amp;quot;nearby&amp;quot; server won&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;provide&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;measurable&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;improvement&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;in&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;performance&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ServerName&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;update&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;FreeBSD&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;ServerName&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;10.5.128.1&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As you can see we used the KeyPrint that the &lt;code&gt;make.sh&lt;/code&gt; script generated for us.
+You can of course use the DNS name instead of the IP as the &lt;code&gt;ServerName&lt;/code&gt;,
+but be sure to adjust the &lt;code&gt;/etc/hosts&lt;/code&gt; file on each client so that it can resolve local
+names.&lt;/p&gt;</content><category term="FreeBSD"></category></entry></feed>
