@@ -23,7 +23,6 @@ that holds all the configuration and scripts for the update server via:&lt;/p&gt
 &lt;span class="err"&gt;svn co http://svn.freebsd.org/base/user/cperciva/freebsd-update-build freebsd-update-server&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;I suggest to use &lt;code&gt;/usr/local&lt;/code&gt; as this is the 'standard' path of most scripts
 within the repository.&lt;/p&gt;
 &lt;h3&gt;Building update packages&lt;/h3&gt;
@@ -35,7 +34,6 @@ folder and copy over the build.conf from the i386 folder:&lt;/p&gt;
 &lt;span class="err"&gt;mkdir amd64&lt;/span&gt;
 &lt;span class="err"&gt;cp i386/build.conf amd64/build.conf&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Next we edit the &lt;code&gt;amd64/build.conf&lt;/code&gt; file and adjust
 the SHA256 hash and the EOL date in it to reflect the amd64 version. Also we need to
@@ -56,7 +54,6 @@ The final file should look somewhat like this:&lt;/p&gt;
 &lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;FTP&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;ftp&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;ftp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;freebsd&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pub&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;FreeBSD&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;releases&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ISO&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;IMAGES&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;FreeBSD upgrades are signed by the update server. This is done via a key that is
 generated via the first run of the make script, it will ask you for a password to
 protect your key. Note that password down somewhere safe, you will need it to sign
@@ -65,7 +62,6 @@ all updates in the future:&lt;/p&gt;
 &lt;span class="err"&gt;sh scripts/make.sh&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;Important! The command finishes with the output of the public key fingerprint. Note
 this down somewhere as well, you will need this fingerprint on every client so that
 it can verify the packages from the update server later on:&lt;/p&gt;
@@ -73,18 +69,15 @@ it can verify the packages from the update server later on:&lt;/p&gt;
 &lt;span class="err"&gt;5552a36eb246be88412c56eb6ee7edccab50ec9b2fe18c90767853e90ad52a0a&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;The next step is to run our initial build. This can take some time thus
 I recommend starting a tmux (or screen if you like) session first:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;tmux new -s upgrade_server&lt;/span&gt;
 &lt;span class="err"&gt;cd /usr/local/freebsd-update-server&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;After that we can start our first build:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;sh scripts/init.sh amd64 9.2-RELEASE&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;This process can take up to several hours, depending on the hardware it is run
 on. It finishes with the following output:&lt;/p&gt;
@@ -95,13 +88,11 @@ on. It finishes with the following output:&lt;/p&gt;
 &lt;span class="err"&gt;to sign the release.&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;First, we mount our signing key with the password that we encrypted it with,
 then we sign our release:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;sh -e scripts/mountkey.sh&lt;/span&gt;
 &lt;span class="err"&gt;sh -e scripts/approve.sh amd64 9.2-RELEASE&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;This finishes with:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;The FreeBSD/amd64 9.2-RELEASE update build has been signed and is&lt;/span&gt;
@@ -111,19 +102,16 @@ then we sign our release:&lt;/p&gt;
 &lt;span class="err"&gt;the new builds.&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;Were done! No - actually we now have to build our &lt;code&gt;9.3-RELEASE&lt;/code&gt; upgrade files.
 We will copy over the configuration folder from 9.2 and adjust it to our needs:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;cp -r /usr/local/freebsd-update-server/scripts/9.2-RELEASE /usr/local/freebsd-update-server/scripts/9.3-RELEASE&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Next, as we want to build and distribute only an amd64 version, we delete the
 i386 folder:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;cd /usr/local/freebsd-update-server/scripts/9.3-RELEASE&lt;/span&gt;
 &lt;span class="err"&gt;rm -rf i386&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Let's adjust the &lt;code&gt;amd64/build.conf&lt;/code&gt; file for 9.3:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="n"&gt;SHA256&lt;/span&gt; &lt;span class="n"&gt;hash&lt;/span&gt; &lt;span class="k"&gt;of&lt;/span&gt; &lt;span class="n"&gt;disc1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iso&lt;/span&gt; &lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
@@ -141,12 +129,10 @@ i386 folder:&lt;/p&gt;
 &lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;FTP&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;ftp&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;ftp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;freebsd&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pub&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;FreeBSD&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;releases&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ISO&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;IMAGES&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;And fire off our build of the 9.3-RELEASE:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;cd /usr/local/freebsd-update-server&lt;/span&gt;
 &lt;span class="err"&gt;sh scripts/init.sh amd64 9.3-RELEASE&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;This will complete with:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;FreeBSD/amd64 9.3-RELEASE initialization build complete.  Please&lt;/span&gt;
@@ -155,19 +141,16 @@ i386 folder:&lt;/p&gt;
 &lt;span class="err"&gt;# sh -e approve.sh amd64 9.3-RELEASE&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;To sign the release run the approve script again (if you unmounted the
 key in the meantime don't forget to mount it again via &lt;code&gt;sh -e scripts/mountkey.sh&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;sh -e scripts/approve.sh amd64 9.3-RELEASE&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;h3&gt;Building newest patches&lt;/h3&gt;
 &lt;p&gt;After having build our initial version it is time to bring both to their newest level. 
 The &lt;code&gt;17&lt;/code&gt; as a parameter is the desired patchlevel in the following command:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;sh scripts/diff.sh amd64 9.2-RELEASE 17&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;This will conclude with:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;FreeBSD/amd64 9.2-RELEASE update build complete.  Please review&lt;/span&gt;
@@ -176,7 +159,6 @@ The &lt;code&gt;17&lt;/code&gt; as a parameter is the desired patchlevel in the 
 &lt;span class="err"&gt;# sh -e approve.sh amd64 9.2-RELEASE&lt;/span&gt;
 &lt;span class="err"&gt;to sign the build.&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Next step is to approve the 9.2 build followed by starting the build of the newest 
 upgrade patches for 9.3. At the moment (April 2015) the patchlevel for this version is &lt;code&gt;13&lt;/code&gt;, 
@@ -192,17 +174,14 @@ differential build is done via:&lt;/p&gt;
 &lt;span class="err"&gt;sh scripts/diff.sh amd64 9.3-RELEASE 13&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;The last step is to approve the 9.3 patches and build the upgrade patches between 9.2 and 9.3 via:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;sh -e scripts/approve.sh amd64 9.3-RELEASE&lt;/span&gt;
 &lt;span class="err"&gt;sh tools/build-upgrade-patches.sh pub amd64 9.3-RELEASE 9.2-RELEASE&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;This command should finish without any output. Finally we can umount our signing key via:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;sh scripts/umountkey.sh&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;We now have all necessary files to upgrade a 9.2 system to a 9.3 system. To
 distribute these we will use the webserver nginx.&lt;/p&gt;
@@ -211,11 +190,9 @@ distribute these we will use the webserver nginx.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;pkg install nginx&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;To enable it add&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;nginx_enable=&amp;quot;YES&amp;quot; to&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;to the &lt;code&gt;\etc\rc.conf&lt;/code&gt; file. The standard configuration leaves the server
 open to the public, thus we will adjust the nginx configuration
@@ -225,17 +202,14 @@ within our internal network. In our case this is the following address:&lt;/p&gt
 &lt;span class="err"&gt;     listen       10.5.128.1:80;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;Also we change the root directory of nginx to point to the update files we
 just built:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;root /usr/local/freebsd-update-server/pub&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;The last step is to start it via:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;service nginx start&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;h3&gt;Configuring the clients&lt;/h3&gt;
 &lt;p&gt;We now have a working update server that is able to serve our clients, but
@@ -254,7 +228,6 @@ this we have to adjust the &lt;code&gt;\etc\freebsd-update.conf&lt;/code&gt;:&lt
 &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ServerName&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;update&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;FreeBSD&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;span class="n"&gt;ServerName&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;10.5.128.1&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;As you can see we used the KeyPrint that the &lt;code&gt;make.sh&lt;/code&gt; script generated for us.
 You can of course use the DNS name instead of the IP as the &lt;code&gt;ServerName&lt;/code&gt;,
