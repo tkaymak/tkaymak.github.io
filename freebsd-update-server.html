@@ -29,24 +29,27 @@
 
 
 
+  
 
+
+ 
 
 <meta name="author" content="Tobias Kaymak" />
 <meta name="description" content="FreeBSD is an operating system that we use to power various things at work. Its most significant advantage lays in the advanced filesystem ZFS and it&#39;s proven stability. As of this writing we run 39 servers with FreeBSD and we update them regularly. While normal patches are quite fast to …" />
 <meta name="keywords" content="">
 
 
-<meta property="og:site_name" content="Tobias Kaymak"s Blog"/>
-<meta property="og:title" content="Build your own FreeBSD update server"/>
-<meta property="og:description" content="FreeBSD is an operating system that we use to power various things at work. Its most significant advantage lays in the advanced filesystem ZFS and it&#39;s proven stability. As of this writing we run 39 servers with FreeBSD and we update them regularly. While normal patches are quite fast to …"/>
-<meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="https://tobtob.de/freebsd-update-server.html"/>
-<meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2015-01-30 16:01:00+01:00"/>
-<meta property="article:modified_time" content="2015-04-20 11:25:00+02:00"/>
-<meta property="article:author" content="https://tobtob.de/author/tobias-kaymak.html">
-<meta property="article:section" content="FreeBSD"/>
-<meta property="og:image" content="https://tobtob.de/images/profile.png">
+  <meta property="og:site_name" content="Tobias Kaymak"s Blog"/>
+  <meta property="og:title" content="Build your own FreeBSD update server"/>
+  <meta property="og:description" content="FreeBSD is an operating system that we use to power various things at work. Its most significant advantage lays in the advanced filesystem ZFS and it&#39;s proven stability. As of this writing we run 39 servers with FreeBSD and we update them regularly. While normal patches are quite fast to …"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://tobtob.de/freebsd-update-server.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2015-01-30 16:01:00+01:00"/>
+  <meta property="article:modified_time" content="2015-04-20 11:25:00+02:00"/>
+  <meta property="article:author" content="https://tobtob.de/author/tobias-kaymak.html">
+  <meta property="article:section" content="FreeBSD"/>
+  <meta property="og:image" content="https://tobtob.de/images/profile.png">
 
   <title>Tobias Kaymak"s Blog &ndash; Build your own FreeBSD update server</title>
 
@@ -54,12 +57,12 @@
 <body class="light-theme">
   <aside>
     <div>
-      <a href="https://tobtob.de">
+      <a href="https://tobtob.de/">
         <img src="https://tobtob.de/images/profile.png" alt="Random Notes about Data Engineering" title="Random Notes about Data Engineering">
       </a>
 
       <h1>
-        <a href="https://tobtob.de">Random Notes about Data Engineering</a>
+        <a href="https://tobtob.de/">Random Notes about Data Engineering</a>
       </h1>
 
 <p>Tobias Kaymak</p>
@@ -101,7 +104,7 @@
   <main>
 
     <nav>
-      <a href="https://tobtob.de">Home</a>
+      <a href="https://tobtob.de/">Home</a>
 
       <a href="/archives.html">Archives</a>
       <a href="/categories.html">Categories</a>
@@ -138,8 +141,8 @@ machine to 9.3 via the <code>freebsd-update -r 9.3-RELEASE upgrade</code> comman
 described in point 24.2.3 in the <a href="https://www.freebsd.org/doc/en/books/handbook/updating-upgrading-freebsdupdate.html">handbook</a>.</p>
 <p>When running on the newest version, proceed with checking out the SVN repository
 that holds all the configuration and scripts for the update server via:</p>
-<div class="highlight"><pre><span></span><code><span class="err">cd /usr/local/</span>
-<span class="err">svn co http://svn.freebsd.org/base/user/cperciva/freebsd-update-build freebsd-update-server</span>
+<div class="highlight"><pre><span></span><code>cd /usr/local/
+svn co http://svn.freebsd.org/base/user/cperciva/freebsd-update-build freebsd-update-server
 </code></pre></div>
 
 <p>I suggest to use <code>/usr/local</code> as this is the 'standard' path of most scripts
@@ -149,134 +152,134 @@ within the repository.</p>
 update server. This is necessary since the system has to determine the difference
 between two versions. For this we have to create the amd64 directory in the <code>scripts</code>
 folder and copy over the build.conf from the i386 folder:</p>
-<div class="highlight"><pre><span></span><code><span class="err">cd /usr/local/freebsd-update-server/scripts/9.2-RELEASE</span>
-<span class="err">mkdir amd64</span>
-<span class="err">cp i386/build.conf amd64/build.conf</span>
+<div class="highlight"><pre><span></span><code>cd /usr/local/freebsd-update-server/scripts/9.2-RELEASE
+mkdir amd64
+cp i386/build.conf amd64/build.conf
 </code></pre></div>
 
 <p>Next we edit the <code>amd64/build.conf</code> file and adjust
 the SHA256 hash and the EOL date in it to reflect the amd64 version. Also we need to
 point it towards the FTP server where to fetch the ISO image of the release from.
 The final file should look somewhat like this:</p>
-<div class="highlight"><pre><span></span><code><span class="o">#</span> <span class="n">SHA256</span> <span class="n">hash</span> <span class="k">of</span> <span class="n">disc1</span><span class="p">.</span><span class="n">iso</span> <span class="n">image</span><span class="p">.</span>
-<span class="n">export</span> <span class="n">RELH</span><span class="o">=</span><span class="n">a8c1751b83646530148766618a89a97009e7500e7057a5cbe3afd74ef480c915</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># SHA256 hash of disc1.iso image.</span>
+<span class="k">export</span> <span class="n">RELH</span><span class="o">=</span><span class="n">a8c1751b83646530148766618a89a97009e7500e7057a5cbe3afd74ef480c915</span>
 
-<span class="o">#</span> <span class="n">Components</span> <span class="k">of</span> <span class="n">the</span> <span class="n">world</span><span class="p">,</span> <span class="k">source</span><span class="p">,</span> <span class="k">and</span> <span class="n">kernels</span>
-<span class="n">export</span> <span class="n">WORLDPARTS</span><span class="o">=</span><span class="ss">&quot;base doc games&quot;</span>
-<span class="n">export</span> <span class="n">SOURCEPARTS</span><span class="o">=</span><span class="ss">&quot;src&quot;</span>
-<span class="n">export</span> <span class="n">KERNELPARTS</span><span class="o">=</span><span class="ss">&quot;kernel&quot;</span>
+<span class="c1"># Components of the world, source, and kernels</span>
+<span class="k">export</span> <span class="n">WORLDPARTS</span><span class="o">=</span><span class="s2">&quot;base doc games&quot;</span>
+<span class="k">export</span> <span class="n">SOURCEPARTS</span><span class="o">=</span><span class="s2">&quot;src&quot;</span>
+<span class="k">export</span> <span class="n">KERNELPARTS</span><span class="o">=</span><span class="s2">&quot;kernel&quot;</span>
 
-<span class="o">#</span> <span class="n">EOL</span> <span class="nb">date</span>
-<span class="n">export</span> <span class="n">EOL</span><span class="o">=</span><span class="mi">1419944400</span>
+<span class="c1"># EOL date</span>
+<span class="k">export</span> <span class="n">EOL</span><span class="o">=</span><span class="mi">1419944400</span>
 
-<span class="o">#</span> <span class="k">Location</span> <span class="k">from</span> <span class="n">which</span> <span class="k">to</span> <span class="k">fetch</span> <span class="n">releases</span>
-<span class="n">export</span> <span class="n">FTP</span><span class="o">=</span><span class="n">ftp</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="p">.</span><span class="n">freebsd</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">FreeBSD</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">ISO</span><span class="o">-</span><span class="n">IMAGES</span><span class="o">/</span><span class="mi">9</span><span class="p">.</span><span class="mi">2</span><span class="o">/</span>
+<span class="c1"># Location from which to fetch releases</span>
+<span class="k">export</span> <span class="n">FTP</span><span class="o">=</span><span class="n">ftp</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">freebsd</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">FreeBSD</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">ISO</span><span class="o">-</span><span class="n">IMAGES</span><span class="o">/</span><span class="mf">9.2</span><span class="o">/</span>
 </code></pre></div>
 
 <p>FreeBSD upgrades are signed by the update server. This is done via a key that is
 generated via the first run of the make script, it will ask you for a password to
 protect your key. Note that password down somewhere safe, you will need it to sign
 all updates in the future:</p>
-<div class="highlight"><pre><span></span><code><span class="err">cd /usr/local/freebsd-update-server</span>
-<span class="err">sh scripts/make.sh</span>
+<div class="highlight"><pre><span></span><code>cd /usr/local/freebsd-update-server
+sh scripts/make.sh
 </code></pre></div>
 
 <p>Important! The command finishes with the output of the public key fingerprint. Note
 this down somewhere as well, you will need this fingerprint on every client so that
 it can verify the packages from the update server later on:</p>
-<div class="highlight"><pre><span></span><code><span class="err">Public key fingerprint:</span>
-<span class="err">5552a36eb246be88412c56eb6ee7edccab50ec9b2fe18c90767853e90ad52a0a</span>
+<div class="highlight"><pre><span></span><code>Public key fingerprint:
+5552a36eb246be88412c56eb6ee7edccab50ec9b2fe18c90767853e90ad52a0a
 </code></pre></div>
 
 <p>The next step is to run our initial build. This can take some time thus
 I recommend starting a tmux (or screen if you like) session first:</p>
-<div class="highlight"><pre><span></span><code><span class="err">tmux new -s upgrade_server</span>
-<span class="err">cd /usr/local/freebsd-update-server</span>
+<div class="highlight"><pre><span></span><code>tmux new -s upgrade_server
+cd /usr/local/freebsd-update-server
 </code></pre></div>
 
 <p>After that we can start our first build:</p>
-<div class="highlight"><pre><span></span><code><span class="err">sh scripts/init.sh amd64 9.2-RELEASE</span>
+<div class="highlight"><pre><span></span><code>sh scripts/init.sh amd64 9.2-RELEASE
 </code></pre></div>
 
 <p>This process can take up to several hours, depending on the hardware it is run
 on. It finishes with the following output:</p>
-<div class="highlight"><pre><span></span><code><span class="err">FreeBSD/amd64 9.2-RELEASE initialization build complete.  Please</span>
-<span class="err">review the list of build stamps printed above to confirm that</span>
-<span class="err">they look sensible, then run</span>
-<span class="err"># sh -e approve.sh amd64 9.2-RELEASE</span>
-<span class="err">to sign the release.</span>
+<div class="highlight"><pre><span></span><code><span class="nv">FreeBSD</span><span class="o">/</span><span class="nv">amd64</span> <span class="mi">9</span>.<span class="mi">2</span><span class="o">-</span><span class="nv">RELEASE</span> <span class="nv">initialization</span> <span class="nv">build</span> <span class="nv">complete</span>.  <span class="nv">Please</span>
+<span class="nv">review</span> <span class="nv">the</span> <span class="nv">list</span> <span class="nv">of</span> <span class="nv">build</span> <span class="nv">stamps</span> <span class="nv">printed</span> <span class="nv">above</span> <span class="nv">to</span> <span class="nv">confirm</span> <span class="nv">that</span>
+<span class="nv">they</span> <span class="nv">look</span> <span class="nv">sensible</span>, <span class="k">then</span> <span class="nv">run</span>
+# <span class="nv">sh</span> <span class="o">-</span><span class="nv">e</span> <span class="nv">approve</span>.<span class="nv">sh</span> <span class="nv">amd64</span> <span class="mi">9</span>.<span class="mi">2</span><span class="o">-</span><span class="nv">RELEASE</span>
+<span class="nv">to</span> <span class="nv">sign</span> <span class="nv">the</span> <span class="nv">release</span>.
 </code></pre></div>
 
 <p>First, we mount our signing key with the password that we encrypted it with,
 then we sign our release:</p>
-<div class="highlight"><pre><span></span><code><span class="err">sh -e scripts/mountkey.sh</span>
-<span class="err">sh -e scripts/approve.sh amd64 9.2-RELEASE</span>
+<div class="highlight"><pre><span></span><code>sh -e scripts/mountkey.sh
+sh -e scripts/approve.sh amd64 9.2-RELEASE
 </code></pre></div>
 
 <p>This finishes with:</p>
-<div class="highlight"><pre><span></span><code><span class="err">The FreeBSD/amd64 9.2-RELEASE update build has been signed and is</span>
-<span class="err">ready to be uploaded.  Remember to run</span>
-<span class="err"># sh -e umountkey.sh</span>
-<span class="err">to unmount the decrypted key once you have finished signing all</span>
-<span class="err">the new builds.</span>
+<div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">FreeBSD</span><span class="o">/</span><span class="n">amd64</span> <span class="mf">9.2</span><span class="o">-</span><span class="n">RELEASE</span> <span class="n">update</span> <span class="n">build</span> <span class="n">has</span> <span class="n">been</span> <span class="n">signed</span> <span class="ow">and</span> <span class="k">is</span>
+<span class="n">ready</span> <span class="n">to</span> <span class="n">be</span> <span class="n">uploaded</span><span class="o">.</span>  <span class="n">Remember</span> <span class="n">to</span> <span class="n">run</span>
+<span class="c1"># sh -e umountkey.sh</span>
+<span class="n">to</span> <span class="n">unmount</span> <span class="n">the</span> <span class="n">decrypted</span> <span class="n">key</span> <span class="n">once</span> <span class="n">you</span> <span class="n">have</span> <span class="n">finished</span> <span class="n">signing</span> <span class="n">all</span>
+<span class="n">the</span> <span class="n">new</span> <span class="n">builds</span><span class="o">.</span>
 </code></pre></div>
 
 <p>Were done! No - actually we now have to build our <code>9.3-RELEASE</code> upgrade files.
 We will copy over the configuration folder from 9.2 and adjust it to our needs:</p>
-<div class="highlight"><pre><span></span><code><span class="err">cp -r /usr/local/freebsd-update-server/scripts/9.2-RELEASE /usr/local/freebsd-update-server/scripts/9.3-RELEASE</span>
+<div class="highlight"><pre><span></span><code>cp -r /usr/local/freebsd-update-server/scripts/9.2-RELEASE /usr/local/freebsd-update-server/scripts/9.3-RELEASE
 </code></pre></div>
 
 <p>Next, as we want to build and distribute only an amd64 version, we delete the
 i386 folder:</p>
-<div class="highlight"><pre><span></span><code><span class="err">cd /usr/local/freebsd-update-server/scripts/9.3-RELEASE</span>
-<span class="err">rm -rf i386</span>
+<div class="highlight"><pre><span></span><code>cd /usr/local/freebsd-update-server/scripts/9.3-RELEASE
+rm -rf i386
 </code></pre></div>
 
 <p>Let's adjust the <code>amd64/build.conf</code> file for 9.3:</p>
-<div class="highlight"><pre><span></span><code><span class="o">#</span> <span class="n">SHA256</span> <span class="n">hash</span> <span class="k">of</span> <span class="n">disc1</span><span class="p">.</span><span class="n">iso</span> <span class="n">image</span><span class="p">.</span>
-<span class="n">export</span> <span class="n">RELH</span><span class="o">=</span><span class="mi">5</span><span class="n">a3c82653d77bba7d7ded8bd7efbedc09d52cf4045d98ce52a82c9e0f8fa9b0e</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># SHA256 hash of disc1.iso image.</span>
+<span class="k">export</span> <span class="n">RELH</span><span class="o">=</span><span class="mi">5</span><span class="n">a3c82653d77bba7d7ded8bd7efbedc09d52cf4045d98ce52a82c9e0f8fa9b0e</span>
 
-<span class="o">#</span> <span class="n">Components</span> <span class="k">of</span> <span class="n">the</span> <span class="n">world</span><span class="p">,</span> <span class="k">source</span><span class="p">,</span> <span class="k">and</span> <span class="n">kernels</span>
-<span class="n">export</span> <span class="n">WORLDPARTS</span><span class="o">=</span><span class="ss">&quot;base doc games&quot;</span>
-<span class="n">export</span> <span class="n">SOURCEPARTS</span><span class="o">=</span><span class="ss">&quot;src&quot;</span>
-<span class="n">export</span> <span class="n">KERNELPARTS</span><span class="o">=</span><span class="ss">&quot;kernel&quot;</span>
+<span class="c1"># Components of the world, source, and kernels</span>
+<span class="k">export</span> <span class="n">WORLDPARTS</span><span class="o">=</span><span class="s2">&quot;base doc games&quot;</span>
+<span class="k">export</span> <span class="n">SOURCEPARTS</span><span class="o">=</span><span class="s2">&quot;src&quot;</span>
+<span class="k">export</span> <span class="n">KERNELPARTS</span><span class="o">=</span><span class="s2">&quot;kernel&quot;</span>
 
-<span class="o">#</span> <span class="n">EOL</span> <span class="nb">date</span>
-<span class="n">export</span> <span class="n">EOL</span><span class="o">=</span><span class="mi">1483142400</span>
+<span class="c1"># EOL date</span>
+<span class="k">export</span> <span class="n">EOL</span><span class="o">=</span><span class="mi">1483142400</span>
 
-<span class="o">#</span> <span class="k">Location</span> <span class="k">from</span> <span class="n">which</span> <span class="k">to</span> <span class="k">fetch</span> <span class="n">releases</span>
-<span class="n">export</span> <span class="n">FTP</span><span class="o">=</span><span class="n">ftp</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="p">.</span><span class="n">freebsd</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">FreeBSD</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">ISO</span><span class="o">-</span><span class="n">IMAGES</span><span class="o">/</span><span class="mi">9</span><span class="p">.</span><span class="mi">3</span><span class="o">/</span>
+<span class="c1"># Location from which to fetch releases</span>
+<span class="k">export</span> <span class="n">FTP</span><span class="o">=</span><span class="n">ftp</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">freebsd</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">FreeBSD</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">ISO</span><span class="o">-</span><span class="n">IMAGES</span><span class="o">/</span><span class="mf">9.3</span><span class="o">/</span>
 </code></pre></div>
 
 <p>And fire off our build of the 9.3-RELEASE:</p>
-<div class="highlight"><pre><span></span><code><span class="err">cd /usr/local/freebsd-update-server</span>
-<span class="err">sh scripts/init.sh amd64 9.3-RELEASE</span>
+<div class="highlight"><pre><span></span><code>cd /usr/local/freebsd-update-server
+sh scripts/init.sh amd64 9.3-RELEASE
 </code></pre></div>
 
 <p>This will complete with:</p>
-<div class="highlight"><pre><span></span><code><span class="err">FreeBSD/amd64 9.3-RELEASE initialization build complete.  Please</span>
-<span class="err">review the list of build stamps printed above to confirm that</span>
-<span class="err">they look sensible, then run</span>
-<span class="err"># sh -e approve.sh amd64 9.3-RELEASE</span>
+<div class="highlight"><pre><span></span><code><span class="nv">FreeBSD</span><span class="o">/</span><span class="nv">amd64</span> <span class="mi">9</span>.<span class="mi">3</span><span class="o">-</span><span class="nv">RELEASE</span> <span class="nv">initialization</span> <span class="nv">build</span> <span class="nv">complete</span>.  <span class="nv">Please</span>
+<span class="nv">review</span> <span class="nv">the</span> <span class="nv">list</span> <span class="nv">of</span> <span class="nv">build</span> <span class="nv">stamps</span> <span class="nv">printed</span> <span class="nv">above</span> <span class="nv">to</span> <span class="nv">confirm</span> <span class="nv">that</span>
+<span class="nv">they</span> <span class="nv">look</span> <span class="nv">sensible</span>, <span class="k">then</span> <span class="nv">run</span>
+# <span class="nv">sh</span> <span class="o">-</span><span class="nv">e</span> <span class="nv">approve</span>.<span class="nv">sh</span> <span class="nv">amd64</span> <span class="mi">9</span>.<span class="mi">3</span><span class="o">-</span><span class="nv">RELEASE</span>
 </code></pre></div>
 
 <p>To sign the release run the approve script again (if you unmounted the
 key in the meantime don't forget to mount it again via <code>sh -e scripts/mountkey.sh</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="err">sh -e scripts/approve.sh amd64 9.3-RELEASE</span>
+<div class="highlight"><pre><span></span><code>sh -e scripts/approve.sh amd64 9.3-RELEASE
 </code></pre></div>
 
 <h3>Building newest patches</h3>
 <p>After having build our initial version it is time to bring both to their newest level. 
 The <code>17</code> as a parameter is the desired patchlevel in the following command:</p>
-<div class="highlight"><pre><span></span><code><span class="err">sh scripts/diff.sh amd64 9.2-RELEASE 17</span>
+<div class="highlight"><pre><span></span><code>sh scripts/diff.sh amd64 9.2-RELEASE 17
 </code></pre></div>
 
 <p>This will conclude with:</p>
-<div class="highlight"><pre><span></span><code><span class="err">FreeBSD/amd64 9.2-RELEASE update build complete.  Please review</span>
-<span class="err">the list of build stamps printed above and the list of updated</span>
-<span class="err">files to confirm that they look sensible, then run</span>
-<span class="err"># sh -e approve.sh amd64 9.2-RELEASE</span>
-<span class="err">to sign the build.</span>
+<div class="highlight"><pre><span></span><code><span class="nv">FreeBSD</span><span class="o">/</span><span class="nv">amd64</span> <span class="mi">9</span>.<span class="mi">2</span><span class="o">-</span><span class="nv">RELEASE</span> <span class="nv">update</span> <span class="nv">build</span> <span class="nv">complete</span>.  <span class="nv">Please</span> <span class="nv">review</span>
+<span class="nv">the</span> <span class="nv">list</span> <span class="nv">of</span> <span class="nv">build</span> <span class="nv">stamps</span> <span class="nv">printed</span> <span class="nv">above</span> <span class="nv">and</span> <span class="nv">the</span> <span class="nv">list</span> <span class="nv">of</span> <span class="nv">updated</span>
+<span class="nv">files</span> <span class="nv">to</span> <span class="nv">confirm</span> <span class="nv">that</span> <span class="nv">they</span> <span class="nv">look</span> <span class="nv">sensible</span>, <span class="k">then</span> <span class="nv">run</span>
+# <span class="nv">sh</span> <span class="o">-</span><span class="nv">e</span> <span class="nv">approve</span>.<span class="nv">sh</span> <span class="nv">amd64</span> <span class="mi">9</span>.<span class="mi">2</span><span class="o">-</span><span class="nv">RELEASE</span>
+<span class="nv">to</span> <span class="nv">sign</span> <span class="nv">the</span> <span class="nv">build</span>.
 </code></pre></div>
 
 <p>Next step is to approve the 9.2 build followed by starting the build of the newest 
@@ -289,45 +292,45 @@ The first number of a patchfile tells you its patchlevel. In my case the highest
 <code>13</code> and therefore this is the highest patchlevel currently available via the SVN.</p>
 <p>Approving the patches for 9.2 and starting the 
 differential build is done via:</p>
-<div class="highlight"><pre><span></span><code><span class="err">sh -e scripts/approve.sh amd64 9.2-RELEASE</span>
-<span class="err">sh scripts/diff.sh amd64 9.3-RELEASE 13</span>
+<div class="highlight"><pre><span></span><code>sh -e scripts/approve.sh amd64 9.2-RELEASE
+sh scripts/diff.sh amd64 9.3-RELEASE 13
 </code></pre></div>
 
 <p>The last step is to approve the 9.3 patches and build the upgrade patches between 9.2 and 9.3 via:</p>
-<div class="highlight"><pre><span></span><code><span class="err">sh -e scripts/approve.sh amd64 9.3-RELEASE</span>
-<span class="err">sh tools/build-upgrade-patches.sh pub amd64 9.3-RELEASE 9.2-RELEASE</span>
+<div class="highlight"><pre><span></span><code><span class="n">sh</span> <span class="o">-</span><span class="n">e</span> <span class="n">scripts</span><span class="o">/</span><span class="n">approve</span><span class="o">.</span><span class="n">sh</span> <span class="n">amd64</span> <span class="mf">9.3</span><span class="o">-</span><span class="n">RELEASE</span>
+<span class="n">sh</span> <span class="n">tools</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">upgrade</span><span class="o">-</span><span class="n">patches</span><span class="o">.</span><span class="n">sh</span> <span class="n">pub</span> <span class="n">amd64</span> <span class="mf">9.3</span><span class="o">-</span><span class="n">RELEASE</span> <span class="mf">9.2</span><span class="o">-</span><span class="n">RELEASE</span>
 </code></pre></div>
 
 <p>This command should finish without any output. Finally we can umount our signing key via:</p>
-<div class="highlight"><pre><span></span><code><span class="err">sh scripts/umountkey.sh</span>
+<div class="highlight"><pre><span></span><code>sh scripts/umountkey.sh
 </code></pre></div>
 
 <p>We now have all necessary files to upgrade a 9.2 system to a 9.3 system. To
 distribute these we will use the webserver nginx.</p>
 <h3>Installing and configuring nginx</h3>
 <p>Installing nginx via the pkg package manager starts with:</p>
-<div class="highlight"><pre><span></span><code><span class="err">pkg install nginx</span>
+<div class="highlight"><pre><span></span><code>pkg install nginx
 </code></pre></div>
 
 <p>To enable it add</p>
-<div class="highlight"><pre><span></span><code><span class="err">nginx_enable=&quot;YES&quot; to</span>
+<div class="highlight"><pre><span></span><code>nginx_enable=&quot;YES&quot; to
 </code></pre></div>
 
 <p>to the <code>\etc\rc.conf</code> file. The standard configuration leaves the server
 open to the public, thus we will adjust the nginx configuration
 under <code>\usr\local\etc\nginx\nginx.conf</code>, to make the server only available
 within our internal network. In our case this is the following address:</p>
-<div class="highlight"><pre><span></span><code><span class="err">server {</span>
-<span class="err">     listen       10.5.128.1:80;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">server</span> <span class="p">{</span>
+     <span class="err">listen</span>       <span class="err">10.5.128.1:80</span><span class="p">;</span>
 </code></pre></div>
 
 <p>Also we change the root directory of nginx to point to the update files we
 just built:</p>
-<div class="highlight"><pre><span></span><code><span class="err">root /usr/local/freebsd-update-server/pub</span>
+<div class="highlight"><pre><span></span><code>root /usr/local/freebsd-update-server/pub
 </code></pre></div>
 
 <p>The last step is to start it via:</p>
-<div class="highlight"><pre><span></span><code><span class="err">service nginx start</span>
+<div class="highlight"><pre><span></span><code>service nginx start
 </code></pre></div>
 
 <h3>Configuring the clients</h3>
@@ -384,7 +387,6 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
   "description": "Random Notes about Data Engineering - the personal blog of Tobias Kaymak"
 }
 </script>
-
 
 </body>
 </html>
