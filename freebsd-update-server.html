@@ -161,19 +161,19 @@ cp i386/build.conf amd64/build.conf
 the SHA256 hash and the EOL date in it to reflect the amd64 version. Also we need to
 point it towards the FTP server where to fetch the ISO image of the release from.
 The final file should look somewhat like this:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># SHA256 hash of disc1.iso image.</span>
-<span class="k">export</span> <span class="n">RELH</span><span class="o">=</span><span class="n">a8c1751b83646530148766618a89a97009e7500e7057a5cbe3afd74ef480c915</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># SHA256 hash of disc1.iso image.</span><span class="w"></span>
+<span class="k">export</span><span class="w"> </span><span class="n">RELH</span><span class="o">=</span><span class="n">a8c1751b83646530148766618a89a97009e7500e7057a5cbe3afd74ef480c915</span><span class="w"></span>
 
-<span class="c1"># Components of the world, source, and kernels</span>
-<span class="k">export</span> <span class="n">WORLDPARTS</span><span class="o">=</span><span class="s2">&quot;base doc games&quot;</span>
-<span class="k">export</span> <span class="n">SOURCEPARTS</span><span class="o">=</span><span class="s2">&quot;src&quot;</span>
-<span class="k">export</span> <span class="n">KERNELPARTS</span><span class="o">=</span><span class="s2">&quot;kernel&quot;</span>
+<span class="c1"># Components of the world, source, and kernels</span><span class="w"></span>
+<span class="k">export</span><span class="w"> </span><span class="n">WORLDPARTS</span><span class="o">=</span><span class="s2">&quot;base doc games&quot;</span><span class="w"></span>
+<span class="k">export</span><span class="w"> </span><span class="n">SOURCEPARTS</span><span class="o">=</span><span class="s2">&quot;src&quot;</span><span class="w"></span>
+<span class="k">export</span><span class="w"> </span><span class="n">KERNELPARTS</span><span class="o">=</span><span class="s2">&quot;kernel&quot;</span><span class="w"></span>
 
-<span class="c1"># EOL date</span>
-<span class="k">export</span> <span class="n">EOL</span><span class="o">=</span><span class="mi">1419944400</span>
+<span class="c1"># EOL date</span><span class="w"></span>
+<span class="k">export</span><span class="w"> </span><span class="n">EOL</span><span class="o">=</span><span class="mi">1419944400</span><span class="w"></span>
 
-<span class="c1"># Location from which to fetch releases</span>
-<span class="k">export</span> <span class="n">FTP</span><span class="o">=</span><span class="n">ftp</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">freebsd</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">FreeBSD</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">ISO</span><span class="o">-</span><span class="n">IMAGES</span><span class="o">/</span><span class="mf">9.2</span><span class="o">/</span>
+<span class="c1"># Location from which to fetch releases</span><span class="w"></span>
+<span class="k">export</span><span class="w"> </span><span class="n">FTP</span><span class="o">=</span><span class="n">ftp</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">freebsd</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">FreeBSD</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">ISO</span><span class="o">-</span><span class="n">IMAGES</span><span class="o">/</span><span class="mf">9.2</span><span class="o">/</span><span class="w"></span>
 </code></pre></div>
 
 <p>FreeBSD upgrades are signed by the update server. This is done via a key that is
@@ -217,11 +217,11 @@ sh -e scripts/approve.sh amd64 9.2-RELEASE
 </code></pre></div>
 
 <p>This finishes with:</p>
-<div class="highlight"><pre><span></span><code><span class="n">The</span> <span class="n">FreeBSD</span><span class="o">/</span><span class="n">amd64</span> <span class="mf">9.2</span><span class="o">-</span><span class="n">RELEASE</span> <span class="n">update</span> <span class="n">build</span> <span class="n">has</span> <span class="n">been</span> <span class="n">signed</span> <span class="ow">and</span> <span class="k">is</span>
-<span class="n">ready</span> <span class="n">to</span> <span class="n">be</span> <span class="n">uploaded</span><span class="o">.</span>  <span class="n">Remember</span> <span class="n">to</span> <span class="n">run</span>
-<span class="c1"># sh -e umountkey.sh</span>
-<span class="n">to</span> <span class="n">unmount</span> <span class="n">the</span> <span class="n">decrypted</span> <span class="n">key</span> <span class="n">once</span> <span class="n">you</span> <span class="n">have</span> <span class="n">finished</span> <span class="n">signing</span> <span class="n">all</span>
-<span class="n">the</span> <span class="n">new</span> <span class="n">builds</span><span class="o">.</span>
+<div class="highlight"><pre><span></span><code><span class="n">The</span><span class="w"> </span><span class="n">FreeBSD</span><span class="o">/</span><span class="n">amd64</span><span class="w"> </span><span class="mf">9.2</span><span class="o">-</span><span class="n">RELEASE</span><span class="w"> </span><span class="n">update</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="n">signed</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="k">is</span><span class="w"></span>
+<span class="n">ready</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">uploaded</span><span class="o">.</span><span class="w">  </span><span class="n">Remember</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">run</span><span class="w"></span>
+<span class="c1"># sh -e umountkey.sh</span><span class="w"></span>
+<span class="n">to</span><span class="w"> </span><span class="n">unmount</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">decrypted</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="n">once</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">finished</span><span class="w"> </span><span class="n">signing</span><span class="w"> </span><span class="n">all</span><span class="w"></span>
+<span class="n">the</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="n">builds</span><span class="o">.</span><span class="w"></span>
 </code></pre></div>
 
 <p>Were done! No - actually we now have to build our <code>9.3-RELEASE</code> upgrade files.
@@ -236,19 +236,19 @@ rm -rf i386
 </code></pre></div>
 
 <p>Let's adjust the <code>amd64/build.conf</code> file for 9.3:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># SHA256 hash of disc1.iso image.</span>
-<span class="k">export</span> <span class="n">RELH</span><span class="o">=</span><span class="mi">5</span><span class="n">a3c82653d77bba7d7ded8bd7efbedc09d52cf4045d98ce52a82c9e0f8fa9b0e</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># SHA256 hash of disc1.iso image.</span><span class="w"></span>
+<span class="k">export</span><span class="w"> </span><span class="n">RELH</span><span class="o">=</span><span class="mi">5</span><span class="n">a3c82653d77bba7d7ded8bd7efbedc09d52cf4045d98ce52a82c9e0f8fa9b0e</span><span class="w"></span>
 
-<span class="c1"># Components of the world, source, and kernels</span>
-<span class="k">export</span> <span class="n">WORLDPARTS</span><span class="o">=</span><span class="s2">&quot;base doc games&quot;</span>
-<span class="k">export</span> <span class="n">SOURCEPARTS</span><span class="o">=</span><span class="s2">&quot;src&quot;</span>
-<span class="k">export</span> <span class="n">KERNELPARTS</span><span class="o">=</span><span class="s2">&quot;kernel&quot;</span>
+<span class="c1"># Components of the world, source, and kernels</span><span class="w"></span>
+<span class="k">export</span><span class="w"> </span><span class="n">WORLDPARTS</span><span class="o">=</span><span class="s2">&quot;base doc games&quot;</span><span class="w"></span>
+<span class="k">export</span><span class="w"> </span><span class="n">SOURCEPARTS</span><span class="o">=</span><span class="s2">&quot;src&quot;</span><span class="w"></span>
+<span class="k">export</span><span class="w"> </span><span class="n">KERNELPARTS</span><span class="o">=</span><span class="s2">&quot;kernel&quot;</span><span class="w"></span>
 
-<span class="c1"># EOL date</span>
-<span class="k">export</span> <span class="n">EOL</span><span class="o">=</span><span class="mi">1483142400</span>
+<span class="c1"># EOL date</span><span class="w"></span>
+<span class="k">export</span><span class="w"> </span><span class="n">EOL</span><span class="o">=</span><span class="mi">1483142400</span><span class="w"></span>
 
-<span class="c1"># Location from which to fetch releases</span>
-<span class="k">export</span> <span class="n">FTP</span><span class="o">=</span><span class="n">ftp</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">freebsd</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">FreeBSD</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">ISO</span><span class="o">-</span><span class="n">IMAGES</span><span class="o">/</span><span class="mf">9.3</span><span class="o">/</span>
+<span class="c1"># Location from which to fetch releases</span><span class="w"></span>
+<span class="k">export</span><span class="w"> </span><span class="n">FTP</span><span class="o">=</span><span class="n">ftp</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">freebsd</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">FreeBSD</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">ISO</span><span class="o">-</span><span class="n">IMAGES</span><span class="o">/</span><span class="mf">9.3</span><span class="o">/</span><span class="w"></span>
 </code></pre></div>
 
 <p>And fire off our build of the 9.3-RELEASE:</p>
@@ -297,8 +297,8 @@ sh scripts/diff.sh amd64 9.3-RELEASE 13
 </code></pre></div>
 
 <p>The last step is to approve the 9.3 patches and build the upgrade patches between 9.2 and 9.3 via:</p>
-<div class="highlight"><pre><span></span><code><span class="n">sh</span> <span class="o">-</span><span class="n">e</span> <span class="n">scripts</span><span class="o">/</span><span class="n">approve</span><span class="o">.</span><span class="n">sh</span> <span class="n">amd64</span> <span class="mf">9.3</span><span class="o">-</span><span class="n">RELEASE</span>
-<span class="n">sh</span> <span class="n">tools</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">upgrade</span><span class="o">-</span><span class="n">patches</span><span class="o">.</span><span class="n">sh</span> <span class="n">pub</span> <span class="n">amd64</span> <span class="mf">9.3</span><span class="o">-</span><span class="n">RELEASE</span> <span class="mf">9.2</span><span class="o">-</span><span class="n">RELEASE</span>
+<div class="highlight"><pre><span></span><code><span class="n">sh</span><span class="w"> </span><span class="o">-</span><span class="n">e</span><span class="w"> </span><span class="n">scripts</span><span class="o">/</span><span class="n">approve</span><span class="o">.</span><span class="n">sh</span><span class="w"> </span><span class="n">amd64</span><span class="w"> </span><span class="mf">9.3</span><span class="o">-</span><span class="n">RELEASE</span><span class="w"></span>
+<span class="n">sh</span><span class="w"> </span><span class="n">tools</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">upgrade</span><span class="o">-</span><span class="n">patches</span><span class="o">.</span><span class="n">sh</span><span class="w"> </span><span class="n">pub</span><span class="w"> </span><span class="n">amd64</span><span class="w"> </span><span class="mf">9.3</span><span class="o">-</span><span class="n">RELEASE</span><span class="w"> </span><span class="mf">9.2</span><span class="o">-</span><span class="n">RELEASE</span><span class="w"></span>
 </code></pre></div>
 
 <p>This command should finish without any output. Finally we can umount our signing key via:</p>
@@ -320,8 +320,8 @@ distribute these we will use the webserver nginx.</p>
 open to the public, thus we will adjust the nginx configuration
 under <code>\usr\local\etc\nginx\nginx.conf</code>, to make the server only available
 within our internal network. In our case this is the following address:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">server</span> <span class="p">{</span>
-     <span class="err">listen</span>       <span class="err">10.5.128.1:80</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">server</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="err">listen</span><span class="w">       </span><span class="err">10.5.128.1:80</span><span class="p">;</span><span class="w"></span>
 </code></pre></div>
 
 <p>Also we change the root directory of nginx to point to the update files we
@@ -368,7 +368,7 @@ names.</p>
 </article>
 
     <footer>
-<p>&copy; 2021 </p>
+<p>&copy; 2022 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
 </p>    </footer>
